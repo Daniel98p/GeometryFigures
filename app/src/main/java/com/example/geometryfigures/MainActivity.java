@@ -3,11 +3,13 @@ package com.example.geometryfigures;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+
 import com.example.geometryfigures.figures.*;
 
 import java.util.Random;
-
+import java.lang.Math;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -32,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
         Figure[] figures = generateFigures();
         int numberElements = figures.length;
-        for (int nr = 0; nr < numberElements; nr = nr + 1){
-            if (figures[nr].name.equals("Kwadrat")){
+        for (int nr = 0; nr < numberElements; nr = nr + 1) {
+//            if (figures[nr] == null) {
+//                continue;
+//            }
+            if (figures[nr].name.equals("Kwadrat")) {
                 Square square = (Square) figures[nr];
                 String strArea = Double.toString(square.calculateArea(square.getLinearDimension()));
                 String linearDimension = Double.toString(square.getLinearDimension());
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 ln.addView(layout);
 
             }
-            if (figures[nr].name.equals("Kolo")){
+            if (figures[nr].name.equals("Kolo")) {
                 Circle circle = (Circle) figures[nr];
                 String strArea = Double.toString(circle.calculateArea(circle.getLinearDimension()));
                 String linearDimension = Double.toString(circle.getLinearDimension());
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 tv3.setText(circle.feature);
                 ln.addView(layout);
             }
-            if (figures[nr].name.equals("Trojkat")){
+            if (figures[nr].name.equals("Trojkat")) {
                 Triangle triangle = (Triangle) figures[nr];
                 String strArea = Double.toString(triangle.calculateArea(triangle.getLinearDimension()));
                 String linearDimension = Double.toString(triangle.getLinearDimension());
@@ -98,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item1:
-                Toast.makeText(this, "item 1 selected", Toast.LENGTH_SHORT).show();
+                Intent startIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(startIntent);
                 return true;
             case R.id.item2:
                 Toast.makeText(this, "item 2 selected", Toast.LENGTH_SHORT).show();
@@ -108,17 +114,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public Figure [] generateFigures(){
-        int n = 10;
+
+    public Figure[] generateFigures() {
+        Intent intent = getIntent();
+        int number = intent.getIntExtra("key1", 6);
+        int min = intent.getIntExtra("key2", 0);
+        int max = intent.getIntExtra("key3", 100);
+//        int n = 10;
         Random generator = new Random();
-        int[] numbers = new int[n];
-        float[] values = new float[n];
-        for (int i = 0; i < n; i += 1) {
+        int[] numbers = new int[number];
+        float[] values = new float[number];
+        for (int i = 0; i < number; i += 1) {
             numbers[i] = generator.nextInt(3);
-            values[i] = generator.nextFloat();
+            //values[i] = generator.nextFloat();
+            values[i] = (float)(Math.random() * (max - min + 1) + min);
         }
-        Figure[] figures = new Figure[n];
-        for (int i = 0; i < n; i += 1) {
+        Figure[] figures = new Figure[number];
+        for (int i = 0; i < number; i += 1) {
             if (numbers[i] == 0) {
                 figures[i] = new Square(values[i]);
             }
@@ -132,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return figures;
+
     }
 }
 
