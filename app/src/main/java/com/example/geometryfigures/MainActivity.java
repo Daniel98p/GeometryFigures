@@ -24,6 +24,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    int triangleSum = 0;
+    int squareSum = 0;
+    int circleSum = 0;
+    double areaTriangleSum = 0;
+    double areaSquareSum = 0;
+    double areaCircleSum = 0;
+    double linearDimensionTriangleSum = 0;
+    double linearDimensionSquareSum = 0;
+    double linearDimensionCircleSum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout ln = (LinearLayout) findViewById(R.id.LinearLayout1);
+
 
         Figure[] figures = generateFigures();
         int numberElements = figures.length;
@@ -53,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv3 = (TextView) layout.findViewById(R.id.textView7);
                 tv3.setText(square.feature);
                 ln.addView(layout);
+                squareSum += 1;
+                areaSquareSum += square.calculateArea(square.getLinearDimension());
+                linearDimensionSquareSum += square.getLinearDimension();
+
 
             }
             if (figures[nr].name.equals("Kolo")) {
@@ -70,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv3 = (TextView) layout.findViewById(R.id.textView7);
                 tv3.setText(circle.feature);
                 ln.addView(layout);
+                circleSum += 1;
+                areaCircleSum += circle.calculateArea(circle.getLinearDimension());
+                linearDimensionCircleSum += circle.getLinearDimension();
             }
             if (figures[nr].name.equals("Trojkat")) {
                 Triangle triangle = (Triangle) figures[nr];
@@ -86,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 TextView tv3 = (TextView) layout.findViewById(R.id.textView7);
                 tv3.setText(triangle.feature);
                 ln.addView(layout);
+                triangleSum += 1;
+                areaTriangleSum += triangle.calculateArea(triangle.getLinearDimension());
+                linearDimensionTriangleSum += triangle.getLinearDimension();
             }
 
         }
@@ -107,7 +127,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startIntent);
                 return true;
             case R.id.item2:
-                Toast.makeText(this, "item 2 selected", Toast.LENGTH_SHORT).show();
+                Intent statisticsIntent = new Intent(getApplicationContext(), StatisticsActivity.class);
+                statisticsIntent.putExtra("squareSum",squareSum);
+                statisticsIntent.putExtra("areaSquareSum",areaSquareSum);
+                statisticsIntent.putExtra("linearDimensionSquareSum",linearDimensionSquareSum);
+                statisticsIntent.putExtra("circleSum",circleSum);
+                statisticsIntent.putExtra("areaCircleSum",areaCircleSum);
+                statisticsIntent.putExtra("linearDimensionCircleSum",linearDimensionCircleSum);
+                statisticsIntent.putExtra("triangleSum",triangleSum);
+                statisticsIntent.putExtra("areaTriangleSum",areaTriangleSum);
+                statisticsIntent.putExtra("linearDimensionTriangleSum",linearDimensionTriangleSum);
+                startActivity(statisticsIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
