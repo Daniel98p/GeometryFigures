@@ -66,6 +66,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/second_layout" />
+
         </LinearLayout>
     </ScrollView>
 

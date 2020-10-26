@@ -12,9 +12,11 @@ public class SettingsActivity extends AppCompatActivity {
     int number;
     int min;
     int max;
+    boolean clicked = false;
     EditText numberInput;
     EditText minInput;
     EditText maxInput;
+    Button addNewFigure;
     Button submitButton;
 
     @Override
@@ -24,7 +26,15 @@ public class SettingsActivity extends AppCompatActivity {
         numberInput = (EditText) findViewById(R.id.editTextNumber);
         minInput = (EditText) findViewById(R.id.editTextMin);
         maxInput = (EditText) findViewById(R.id.editTextMax);
+        addNewFigure = (Button) findViewById(R.id.addNewFigure);
         submitButton = (Button) findViewById(R.id.submitButton);
+
+        addNewFigure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clicked = true;
+            }
+        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
                 i.putExtra("key1",number);
                 i.putExtra("key2",min);
                 i.putExtra("key3",max);
+                i.putExtra("key4",clicked);
                 startActivity(i);
                 finish();
             }
