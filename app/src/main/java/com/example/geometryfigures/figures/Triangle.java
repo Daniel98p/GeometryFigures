@@ -4,7 +4,7 @@ package com.example.geometryfigures.figures;
 public class Triangle extends Figure {
     public Triangle(double linearDimension) {
         this.linearDimension = linearDimension;
-        this.feature = "Bok";
+        this.feature = "Bok trojkata";
         this.name = "Trojkat";
     }
 

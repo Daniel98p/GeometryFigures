@@ -2,6 +2,7 @@ package com.example.geometryfigures;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,11 +15,15 @@ import java.util.Random;
 import java.lang.Math;
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     double linearDimensionTriangleSum = 0;
     double linearDimensionSquareSum = 0;
     double linearDimensionCircleSum = 0;
+    View viewClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         LinearLayout ln = (LinearLayout) findViewById(R.id.LinearLayout1);
+//        TextView tv5 = findViewById(R.id.textView5);
+//        registerForContextMenu(ln);
+        Button delete = (Button) findViewById(R.id.Delete);
 
 
         List<Figure> figures = generateFigures();
@@ -68,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 squareSum += 1;
                 areaSquareSum += square.calculateArea(square.getLinearDimension());
                 linearDimensionSquareSum += square.getLinearDimension();
+                registerForContextMenu(layout);
 
 
             }
@@ -89,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 circleSum += 1;
                 areaCircleSum += circle.calculateArea(circle.getLinearDimension());
                 linearDimensionCircleSum += circle.getLinearDimension();
+                registerForContextMenu(layout);
             }
             if (figures.get(nr).name.equals("Trojkat")) {
                 Triangle triangle = (Triangle) figures.get(nr);
@@ -108,8 +119,40 @@ public class MainActivity extends AppCompatActivity {
                 triangleSum += 1;
                 areaTriangleSum += triangle.calculateArea(triangle.getLinearDimension());
                 linearDimensionTriangleSum += triangle.getLinearDimension();
+                registerForContextMenu(layout);
             }
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LinearLayout ln = (LinearLayout) findViewById(R.id.LinearLayout1);
+                    ln.removeAllViews();
+                }
+            });
 
+        }
+
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+        viewClicked = v;
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.duplicate:
+                duplicateLayout();
+                return true;
+            case R.id.delete:
+                ((ViewGroup) viewClicked.getParent()).removeView(viewClicked);
+//                Toast.makeText(this, "Delete selected", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
 
     }
@@ -184,6 +227,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return figures;
+
+    }
+    public void duplicateLayout(){
+        LinearLayout ln = (LinearLayout) findViewById(R.id.LinearLayout1);
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.second_layout, ln, false);
+        TextView tv = (TextView) layout.findViewById(R.id.textView5);
+        TextView tvFromClickedView = viewClicked.findViewById(R.id.textView5);
+        tv.setText(tvFromClickedView.getText());
+        TextView tv2 = (TextView) layout.findViewById(R.id.textView6);
+        TextView tv2FromClickedView = viewClicked.findViewById(R.id.textView6);
+        tv2.setText(tv2FromClickedView.getText());
+        TextView tv3 = (TextView) layout.findViewById(R.id.textView7);
+        TextView tv3FromClickedView = viewClicked.findViewById(R.id.textView7);
+        tv3.setText(tv3FromClickedView.getText());
+        ImageView iv = (ImageView) layout.findViewById(R.id.imageView);
+//        ImageView ivFromClickedView = viewClicked.findViewById(R.id.imageView);
+        if (tv3.getText() == "Bok"){
+            iv.setImageResource(R.drawable.kwadrat);
+        }
+        else if (tv3.getText() == "Bok trojkata"){
+            iv.setImageResource(R.drawable.trojkat);
+        }
+        else {
+            iv.setImageResource(R.drawable.kolo);
+        }
+
+        ln.addView(layout);
+
 
     }
 }
