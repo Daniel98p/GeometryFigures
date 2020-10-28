@@ -127,6 +127,16 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     LinearLayout ln = (LinearLayout) findViewById(R.id.LinearLayout1);
+                    triangleSum = 0;
+                    squareSum = 0;
+                    circleSum = 0;
+                    areaTriangleSum = 0;
+                    areaSquareSum = 0;
+                    areaCircleSum = 0;
+                    linearDimensionTriangleSum = 0;
+                    linearDimensionSquareSum = 0;
+                    linearDimensionCircleSum = 0;
+
                     ln.removeAllViews();
                 }
             });
