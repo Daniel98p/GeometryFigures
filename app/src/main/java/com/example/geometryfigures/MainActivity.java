@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.lang.Math;
+import java.util.TreeMap;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.ContextMenu;
@@ -151,6 +153,37 @@ public class MainActivity extends AppCompatActivity {
                 ((ViewGroup) viewClicked.getParent()).removeView(viewClicked);
 //                Toast.makeText(this, "Delete selected", Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.edit:
+                Toast.makeText(this, "Edit selected", Toast.LENGTH_SHORT).show();
+//                Intent editIntent = new Intent(getApplicationContext(), EditActivity.class);
+//                editIntent.put
+//                startActivity(editIntent);
+//                Intent intentFromEdit =  getIntent();
+//                double ld = intentFromEdit.getDoubleExtra("number", 1.0);
+//                TextView tv3FromClickedView = viewClicked.findViewById(R.id.textView7);
+//                TextView tv1FromClickedView = viewClicked.findViewById(R.id.textView5);
+//                String strLd = Double.toString(ld);
+//                TextView tv2FromClickedView = viewClicked.findViewById(R.id.textView6);
+//                tv2FromClickedView.setText(strLd);
+//                if (tv3FromClickedView.getText() == "Bok"){
+//                    Square square = new Square(ld);
+//                    double area = square.calculateArea(ld);
+//                    String strArea = Double.toString(area);
+//                    tv1FromClickedView.setText(strArea);
+//                }
+//                else if (tv3FromClickedView.getText() == "Bok trojkata"){
+//                    Triangle triangle = new Triangle(ld);
+//                    double area = triangle.calculateArea(ld);
+//                    String strArea = Double.toString(area);
+//                    tv1FromClickedView.setText(strArea);
+//                }
+//                else {
+//                    Circle circle = new Circle(ld);
+//                    double area = circle.calculateArea(ld);
+//                    String strArea = Double.toString(area);
+//                    tv1FromClickedView.setText(strArea);
+//                }
+//                return true;
             default:
                 return super.onContextItemSelected(item);
         }
@@ -173,13 +206,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.item2:
                 Intent statisticsIntent = new Intent(getApplicationContext(), StatisticsActivity.class);
-                statisticsIntent.putExtra("squareSum",Math.round(squareSum * 100)/100);
+                statisticsIntent.putExtra("squareSum",squareSum);
                 statisticsIntent.putExtra("areaSquareSum",areaSquareSum);
                 statisticsIntent.putExtra("linearDimensionSquareSum",linearDimensionSquareSum);
-                statisticsIntent.putExtra("circleSum",Math.round(circleSum * 100)/100);
+                statisticsIntent.putExtra("circleSum",circleSum);
                 statisticsIntent.putExtra("areaCircleSum",areaCircleSum);
                 statisticsIntent.putExtra("linearDimensionCircleSum",linearDimensionCircleSum);
-                statisticsIntent.putExtra("triangleSum",Math.round(triangleSum * 100)/100);
+                statisticsIntent.putExtra("triangleSum",triangleSum);
                 statisticsIntent.putExtra("areaTriangleSum",areaTriangleSum);
                 statisticsIntent.putExtra("linearDimensionTriangleSum",linearDimensionTriangleSum);
                 startActivity(statisticsIntent);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.content.Intent;
+import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
     int number;
@@ -42,6 +43,19 @@ public class SettingsActivity extends AppCompatActivity {
                 number = Integer.parseInt(numberInput.getText().toString());
                 min = Integer.parseInt(minInput.getText().toString());
                 max = Integer.parseInt(maxInput.getText().toString());
+                if (numberInput.getText().toString().matches("")){
+                    Toast.makeText(getApplicationContext(), "You have an empty value", Toast.LENGTH_SHORT).show();
+                }
+                else  if (minInput.getText().toString().matches("")){
+                    Toast.makeText(getApplicationContext(), "You have an empty value", Toast.LENGTH_SHORT).show();
+                }
+                else  if (maxInput.getText().toString().matches("")){
+                    Toast.makeText(getApplicationContext(), "You have an empty value", Toast.LENGTH_SHORT).show();
+                }
+                else if (min >= max){
+                    Toast.makeText(getApplicationContext(), "Min cannot be bigger or equal than max", Toast.LENGTH_SHORT).show();
+                }
+                else {
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.putExtra("key1",number);
                 i.putExtra("key2",min);
@@ -49,6 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
                 i.putExtra("key4",clicked);
                 startActivity(i);
                 finish();
+                }
             }
         });
 
