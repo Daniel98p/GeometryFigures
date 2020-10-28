@@ -150,6 +150,27 @@ public class MainActivity extends AppCompatActivity {
                 duplicateLayout();
                 return true;
             case R.id.delete:
+                TextView tvFromClickedView = viewClicked.findViewById(R.id.textView5);
+                TextView tv2FromClickedView = viewClicked.findViewById(R.id.textView6);
+                double figureArea = Double.parseDouble(tvFromClickedView.getText().toString());
+                TextView tv3FromClickedView = viewClicked.findViewById(R.id.textView7);
+                double linearDimension = Double.parseDouble(tv2FromClickedView.getText().toString());
+                if (tv3FromClickedView.getText() == "Bok"){
+                    squareSum -= 1;
+                    areaSquareSum -= figureArea;
+                    linearDimensionSquareSum -= linearDimension;
+                }
+                else if (tv3FromClickedView.getText() == "Bok trojkata"){
+                    triangleSum -= 1;
+                    areaTriangleSum -= figureArea;
+                    linearDimensionTriangleSum -= linearDimension;
+
+                }
+                else {
+                    circleSum -= 1;
+                    areaCircleSum -= figureArea;
+                    linearDimensionCircleSum -= linearDimension;
+                }
                 ((ViewGroup) viewClicked.getParent()).removeView(viewClicked);
 //                Toast.makeText(this, "Delete selected", Toast.LENGTH_SHORT).show();
                 return true;
@@ -271,20 +292,32 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(tvFromClickedView.getText());
         TextView tv2 = (TextView) layout.findViewById(R.id.textView6);
         TextView tv2FromClickedView = viewClicked.findViewById(R.id.textView6);
+        double figureArea = Double.parseDouble(tvFromClickedView.getText().toString());
         tv2.setText(tv2FromClickedView.getText());
         TextView tv3 = (TextView) layout.findViewById(R.id.textView7);
         TextView tv3FromClickedView = viewClicked.findViewById(R.id.textView7);
+        double linearDimension = Double.parseDouble(tv2FromClickedView.getText().toString());
         tv3.setText(tv3FromClickedView.getText());
         ImageView iv = (ImageView) layout.findViewById(R.id.imageView);
 //        ImageView ivFromClickedView = viewClicked.findViewById(R.id.imageView);
         if (tv3.getText() == "Bok"){
             iv.setImageResource(R.drawable.kwadrat);
+            squareSum += 1;
+            areaSquareSum += figureArea;
+            linearDimensionSquareSum += linearDimension;
         }
         else if (tv3.getText() == "Bok trojkata"){
             iv.setImageResource(R.drawable.trojkat);
+            triangleSum += 1;
+            areaTriangleSum += figureArea;
+            linearDimensionTriangleSum += linearDimension;
+
         }
         else {
             iv.setImageResource(R.drawable.kolo);
+            circleSum += 1;
+            areaCircleSum += figureArea;
+            linearDimensionCircleSum += linearDimension;
         }
 
         ln.addView(layout);
